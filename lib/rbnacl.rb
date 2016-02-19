@@ -82,6 +82,7 @@ module RbNaCl
   VerifyKey    = Signatures::Ed25519::VerifyKey
   GroupElement = GroupElements::Curve25519
   OneTimeAuth  = OneTimeAuths::Poly1305
+  CryptoStream = StreamCiphers::Salsa20
 end
 
 # Select platform-optimized versions of algorithms

@@ -44,4 +44,22 @@ module RbNaCl
       end
     end
   end
+
+  module StreamCiphers
+    class Salsa20
+      extend Sodium
+      sodium_primitive :salsa20
+
+      sodium_function :c_crypto_stream_salsa20,
+                      :crypto_stream_salsa20,
+                      [:pointer, :ulong_long, :pointer, :pointer]
+
+      def crypto_stream(mlength, nonce, key)
+        cypher_text = Util.zeros(mlength)
+        self.crypto_stream_salsa20(cypher_text, mlength, nonce, key)
+        cypher_text
+      end
+    end
+  end
+
 end
