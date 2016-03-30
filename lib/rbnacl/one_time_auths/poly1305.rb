@@ -54,9 +54,19 @@ module RbNaCl
                       :crypto_stream_salsa20,
                       [:pointer, :ulong_long, :pointer, :pointer]
 
+      sodium_function :c_crypto_stream_salsa20_xor,
+                      :crypto_stream_salsa20_xor,
+                      [:pointer, :pointer, :ulong_long, :pointer, :pointer]
+      
       def crypto_stream(mlength, nonce, key)
-        cypher_text = Util.zeros(mlength)
-        self.crypto_stream_salsa20(cypher_text, mlength, nonce, key)
+        cypher_stream = Util.zeros(mlength)
+        self.crypto_stream_salsa20(cypher_stream, mlength, nonce, key)
+        cypher_stream
+      end
+
+      def crypto_stream_xor(message, nonce, key)
+        cypher_text = Util.zeros(message.length)
+        self.crypto_stream_salsa20_xor(cypher_text, message, message.length, nonce, key)
         cypher_text
       end
     end
